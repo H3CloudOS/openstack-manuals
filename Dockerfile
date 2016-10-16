@@ -13,6 +13,10 @@ RUN mkdir /home/git; \
     cd /home/git; \
     git clone https://github.com/openstack/openstack-manuals.git; \
     cd openstack-manuals; \
-     tox -e checkbuild
+    tox -e checkbuild
 
-RUN systemctl enable httpd
+RUN ln -sf /home/git/openstack-manuals/www /var/www/html
+
+EXPOSE 80
+
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
