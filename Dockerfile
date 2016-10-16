@@ -13,10 +13,13 @@ RUN mkdir /home/git; \
     cd /home/git; \
     git clone https://github.com/openstack/openstack-manuals.git; \
     cd openstack-manuals; \
-    tox -e checkbuild
-
-RUN ln -sf /home/git/openstack-manuals/www /var/www/html
+    tox -e checkbuild; \
+    rm -rf /var/www/html; \
+    mv doc /var/www/html
 
 EXPOSE 80
 
-CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+ADD run-httpd.sh /run-httpd.sh
+RUN chmod -v +x /run-httpd.sh
+
+CMD ["/run-httpd.sh"]
