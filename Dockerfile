@@ -15,6 +15,7 @@ RUN mkdir /home/git; \
     cd openstack-manuals; \
     tox -e checkbuild; \
     rm -rf /var/www/html; \
+    rm -f /etc/httpd/conf.d/welcome.conf; \
     mv doc /var/www/html
 
 EXPOSE 80
